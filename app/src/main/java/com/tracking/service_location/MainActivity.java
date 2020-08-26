@@ -20,13 +20,12 @@ import com.google.android.gms.location.LocationServices;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    static TextView tvlat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvlat=findViewById(R.id.tv_lat);
 
         findViewById(R.id.btt_startLocation).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,12 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        findViewById(R.id.btt_stopLocation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopLocationService();
-            }
-        });
+
 
     }
 
@@ -65,48 +59,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isLocationServiceRunning(){
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        if(activityManager != null){
-            for(ActivityManager.RunningServiceInfo service:
-            activityManager.getRunningServices(Integer.MAX_VALUE)){
-                if(LocationServices.class.getName().equals(service.service.getClassName())){
-                    if(service.foreground){
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        return false;
-    }
-
     private void startLocationService(){
         Intent intent = new Intent(getApplicationContext(), Service_Location.class);
         intent.setAction(Service_Location.ACTION_START_LOCATION_SERVICE);
         startService(intent);
         Toast.makeText(this, "Servicio de Localizacion iniciado",Toast.LENGTH_LONG).show();
-        /*if(isLocationServiceRunning()){
-            Intent intent = new Intent(getApplicationContext(), Service_Location.class);
-            intent.setAction(Service_Location.ACTION_START_LOCATION_SERVICE);
-            startService(intent);
-            Toast.makeText(this, "Servicio de Localizacion iniciado",Toast.LENGTH_LONG).show();
-        }*/
+
+        Intent intent2 = new Intent(this, VistaTransecto.class );
+        startActivity(intent2);
     }
-    private void stopLocationService(){
-        Intent intent = new Intent(getApplicationContext(), Service_Location.class);
-        intent.setAction(Service_Location.ACTION_STOP_LOCATION_SERVICE);
-        startService(intent);
-        Toast.makeText(this, "Servicio de Localizacion detenido",Toast.LENGTH_LONG).show();
-       /* if(isLocationServiceRunning()){
-            Intent intent = new Intent(getApplicationContext(), Service_Location.class);
-            intent.setAction(Service_Location.ACTION_STOP_LOCATION_SERVICE);
-            startService(intent);
-            Toast.makeText(this, "Servicio de Localizacion detenido",Toast.LENGTH_LONG).show();
-        }*/
-    }
-    public static void putValue(double latit){
-        tvlat.setText(String.valueOf(latit));
-    }
+
+
 
 }

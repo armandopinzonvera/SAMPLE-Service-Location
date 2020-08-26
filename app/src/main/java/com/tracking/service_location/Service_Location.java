@@ -22,6 +22,9 @@ import androidx.core.app.NotificationCompat;
 
 public class Service_Location extends Service {
 
+    double latitude, longitude;
+    int height;
+    long time, date;
     static final int LOCATION_SERVICE_ID = 175;
     static final String ACTION_START_LOCATION_SERVICE = "Iniciar Servicio de localizacion";
     static final String ACTION_STOP_LOCATION_SERVICE = "Finalizar servicio de localizacion";
@@ -32,11 +35,18 @@ public class Service_Location extends Service {
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
             if (locationResult != null && locationResult.getLastLocation() != null) {
-                double latitude = locationResult.getLastLocation().getLatitude();
-                double longitude = locationResult.getLastLocation().getLongitude();
+                latitude = locationResult.getLastLocation().getLatitude();
+                longitude = locationResult.getLastLocation().getLongitude();
+                height = (int) Math.floor(locationResult.getLastLocation().getAltitude());
+                time = System.currentTimeMillis();
+                date = System.currentTimeMillis();
 
-                MainActivity.putValue(latitude);
-                Log.d("LOCATION UPDATE", latitude + ", "+longitude);
+                /*/////SEND DATA///////*/
+                VistaTransecto.putValue(latitude, longitude, height, time, date);
+
+                Log.d("LOCATION UPDATE", latitude + ", " + longitude);
+
+                /*////////////*/
             }
         }
     };
@@ -44,13 +54,13 @@ public class Service_Location extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-       throw new UnsupportedOperationException("Aun no esta implementado");
+        throw new UnsupportedOperationException("Aun no esta implementado");
     }
 
-    private void startLocationService(){
-        String channelId= "Notificacion de canal de Localizacion";
+    private void startLocationService() {
+        String channelId = "Notificacion de canal de Localizacion";
         NotificationManager notificationManager =
-                (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent = new Intent();
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 getApplicationContext(),
@@ -69,9 +79,9 @@ public class Service_Location extends Service {
         builder.setAutoCancel(false);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            if(notificationManager != null
-            && notificationManager.getNotificationChannel(channelId) == null){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (notificationManager != null
+                    && notificationManager.getNotificationChannel(channelId) == null) {
                 NotificationChannel notificationChannel = new NotificationChannel(
                         channelId,
                         "Location Service",
@@ -92,19 +102,21 @@ public class Service_Location extends Service {
                 .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
         startForeground(LOCATION_SERVICE_ID, builder.build());
     }
-    private void stopLocationService(){
+
+    private void stopLocationService() {
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
         stopForeground(true);
         stopSelf();
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(intent != null){
+        if (intent != null) {
             String action = intent.getAction();
-            if(action != null){
-                if(action.equals(ACTION_START_LOCATION_SERVICE)){
+            if (action != null) {
+                if (action.equals(ACTION_START_LOCATION_SERVICE)) {
                     startLocationService();
-                }else if(action.equals(ACTION_STOP_LOCATION_SERVICE)){
+                } else if (action.equals(ACTION_STOP_LOCATION_SERVICE)) {
                     stopLocationService();
                 }
             }
