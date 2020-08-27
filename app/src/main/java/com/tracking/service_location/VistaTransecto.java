@@ -1,6 +1,7 @@
 package com.tracking.service_location;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import java.text.SimpleDateFormat;
 public class VistaTransecto extends AppCompatActivity {
 
     static TextView tvlatitud, tvhora, tvlongitud, tvaltura, tvfecha;
-
+    Fragment fragMapa = new MapFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.marco_mapavw, fragMapa ).commit();
 
         tvlatitud = findViewById(R.id.tv_latitude);
         tvlongitud = findViewById(R.id.tv_longitude);

@@ -25,6 +25,7 @@ public class Service_Location extends Service {
     double latitude, longitude;
     int height;
     long time, date;
+    MapFragment mapFragment;
     static final int LOCATION_SERVICE_ID = 175;
     static final String ACTION_START_LOCATION_SERVICE = "Iniciar Servicio de localizacion";
     static final String ACTION_STOP_LOCATION_SERVICE = "Finalizar servicio de localizacion";
@@ -43,7 +44,8 @@ public class Service_Location extends Service {
 
                 /*/////SEND DATA///////*/
                 VistaTransecto.putValue(latitude, longitude, height, time, date);
-
+                mapFragment = new MapFragment();
+                mapFragment.setLocation((float)latitude, (float)longitude);
                 Log.d("LOCATION UPDATE", latitude + ", " + longitude);
 
                 /*////////////*/
