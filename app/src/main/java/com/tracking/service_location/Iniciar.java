@@ -22,7 +22,8 @@ public class Iniciar extends AppCompatActivity {
 
     EditText etNombreProyecto, etIdTransecto;
 
-
+    public static final String NOMBRE_PROYECTO = "nombrePoryecto";
+    public static final String ID_TRANSECTO = "idTransecto";
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
     @Override
@@ -36,7 +37,7 @@ public class Iniciar extends AppCompatActivity {
     }
 
       public void comenzar(View view){
-            conectarSQLite();
+           // conectarSQLite();
             if(ContextCompat.checkSelfPermission(
                     getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
             )!= PackageManager.PERMISSION_GRANTED){
@@ -56,21 +57,6 @@ public class Iniciar extends AppCompatActivity {
     }
 
 
-
-    public void conectarSQLite(){
-        ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.NOMBRE_PROYECTO, null, 1 );
-        SQLiteDatabase db = conexionSQLite.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(UtilidadesSQLite.NOMBRE_MUESTREO, etNombreProyecto.getText().toString());
-        values.put(UtilidadesSQLite.LATITUD, etIdTransecto.getText().toString());
-        //(OJO::)El primer parametro en el nombre de la tabla y el otro es el primero que introducimos
-        Long idResultante = db.insert(UtilidadesSQLite.NOMBRE_PROYECTO, UtilidadesSQLite.NOMBRE_MUESTREO, values);
-
-        Toast.makeText(getApplicationContext(), "Numero de Registro = "+idResultante, Toast.LENGTH_SHORT).show();
-        etIdTransecto.setText("");
-        etNombreProyecto.setText("");
-    }
 
 
     @Override
@@ -92,6 +78,8 @@ public class Iniciar extends AppCompatActivity {
         Toast.makeText(this, "Servicio de Localizacion iniciado",Toast.LENGTH_SHORT).show();
 
         Intent intent2 = new Intent(this, VistaTransecto.class );
+        intent2.putExtra(NOMBRE_PROYECTO, etNombreProyecto.getText().toString());
+        intent2.putExtra(ID_TRANSECTO, etIdTransecto.getText().toString());
         startActivity(intent2);
     }
 
