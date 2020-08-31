@@ -41,6 +41,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         LatLng miPosicion = new LatLng(latitudOrigen, longitudOrigen);
         mMap.addMarker(new MarkerOptions()
                 .position(miPosicion)
