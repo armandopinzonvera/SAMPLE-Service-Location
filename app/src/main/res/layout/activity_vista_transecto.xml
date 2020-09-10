@@ -48,8 +48,7 @@
                 <TextView
                     android:id="@+id/tv_latitude"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="latitud" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -61,8 +60,7 @@
                 <TextView
                     android:id="@+id/tv_longitude"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="longitud" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -74,8 +72,7 @@
                 <TextView
                     android:id="@+id/tv_altura"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="altura" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -89,8 +86,7 @@
                 <TextView
                     android:id="@+id/tv_fecha"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="fecha" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -103,7 +99,6 @@
                     android:id="@+id/tv_hora"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="hora"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,9 +106,9 @@
                     android:id="@+id/btt_stopvw"
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
-                    android:background="@color/orange"
+                    android:background="@color/colorPrimaryDark"
                     android:text="Stop"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/amber" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,6 +127,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="id Transecto" />
+
+                <Button
+                    android:id="@+id/btt_sedToBbdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue"
+
+                    android:text="Send"
+                    android:textColor="@color/amber" />
             </LinearLayout>
         </LinearLayout>
 

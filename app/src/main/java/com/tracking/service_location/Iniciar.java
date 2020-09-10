@@ -36,20 +36,22 @@ public class Iniciar extends AppCompatActivity {
 
     }
 
-      public void comenzar(View view){
-           // conectarSQLite();
-            if(ContextCompat.checkSelfPermission(
-                    getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
-            )!= PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(
-                        Iniciar.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_CODE_LOCATION_PERMISSION
-                );
-            }else{
-                startLocationService();
-            }
+    // Boton - Iniciar servicio de Localizacion
+    public void comenzar(View view) {
+
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    Iniciar.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        } else {
+            startLocationService();
+        }
     }
+
     public void volver(View view) {
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -57,32 +59,33 @@ public class Iniciar extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationService();
-            }else{
+            } else {
                 Toast.makeText(this, "**Permiso negado**", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private void startLocationService(){
+    private void startLocationService() {
         Intent intent = new Intent(getApplicationContext(), Service_Location.class);
         intent.setAction(Service_Location.ACTION_START_LOCATION_SERVICE);
         startService(intent);
-        Toast.makeText(this, "Servicio de Localizacion iniciado",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Servicio de Localizacion iniciado", Toast.LENGTH_SHORT).show();
 
-        Intent intent2 = new Intent(this, VistaTransecto.class );
+        Intent intent2 = new Intent(this, VistaTransecto.class);
         intent2.putExtra(NOMBRE_PROYECTO, etNombreProyecto.getText().toString());
         intent2.putExtra(ID_TRANSECTO, etIdTransecto.getText().toString());
+
+        etNombreProyecto.setText("");
+        etIdTransecto.setText("");
+
         startActivity(intent2);
     }
-
 
 
 }

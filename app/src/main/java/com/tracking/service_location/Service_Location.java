@@ -43,7 +43,8 @@ public class Service_Location extends Service {
                 date = System.currentTimeMillis();
 
                 /*/////SEND DATA///////*/
-                VistaTransecto.putValue(latitude, longitude, height, time, date);
+
+                VistaTransecto.putValueTextView(latitude, longitude, height, time, date);
                 mapFragment = new MapFragment();
                 mapFragment.setLocation((float)latitude, (float)longitude);
                 Log.d("LOCATION UPDATE", latitude + ", " + longitude);
