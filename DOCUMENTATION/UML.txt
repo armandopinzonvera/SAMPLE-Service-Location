@@ -1,0 +1,63 @@
+@startuml
+class Iniciar{
+comenzar(View view)
+volver(View view)
+onRequestPermissionsResult()
+startLocationService() 
+}
+note left: envia datos del transecto
+
+class VistaTransecto{
+TextView longitud, latitud
+onCreate()
+conectarExtras()
+putValueTextView(double latitude, double longitude)
+stop()
+conectarSQLite()
+hilo()
+onBackPressed()
+}
+
+class Service_Location{
+double latitude, longitud
+LocationCallback()
+onBind(Intent intent)
+startLocationService()
+stopLocationService()
+onStartCommand()
+}
+
+class mapFragment{
+GoogleMap mMap
+onCreateView()
+setLocation()
+onMapReady(GoogleMap googleMap)
+}
+
+class ConexionSQLite{
+onCreate(SQLiteDatabase db)
+onUpgrade()
+}
+
+class UtilidadesSQLite{
+String ID
+String NOMBRE_MUESTREO
+String LATITUD
+String LONGITUD
+String ALTURA
+String FECHA
+String HORA
+String TAXON
+String CANTIDAD
+}
+
+
+
+Iniciar-->VistaTransecto
+Iniciar--*Service_Location
+VistaTransecto*--Service_Location
+Service_Location--mapFragment
+mapFragment*--VistaTransecto
+VistaTransecto--ConexionSQLite
+UtilidadesSQLite--ConexionSQLite
+@enduml

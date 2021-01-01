@@ -88,6 +88,13 @@ public class VistaTransecto extends AppCompatActivity {
         SQLiteDatabase db = conexionSQLite.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+      /*  String insert ="INSERT INTO "+UtilidadesSQLite.NOMBRE_PROYECTO
+                +" ("+UtilidadesSQLite.NOMBRE_MUESTREO+", "
+                +UtilidadesSQLite.LATITUD+", "+UtilidadesSQLite.LONGITUD+", "
+                +UtilidadesSQLite.ALTURA+", "+UtilidadesSQLite.FECHA+", "
+                +UtilidadesSQLite.HORA+") VALUES("+
+                ;*/
+
         values.put(UtilidadesSQLite.NOMBRE_MUESTREO, tvIdTransecto.getText().toString());
         values.put(UtilidadesSQLite.LATITUD, tvlatitud.getText().toString());
         values.put(UtilidadesSQLite.LONGITUD, tvlongitud.getText().toString());
